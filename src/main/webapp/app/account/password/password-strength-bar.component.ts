@@ -4,7 +4,7 @@ import {Component, Input, ElementRef} from '@angular/core';
     selector: 'password-strength-bar',
     template: `
         <div id="strength">
-            <small translate="global.messages.validate.newpassword.strength">Password strength:</small>
+            <small jhi-translate="global.messages.validate.newpassword.strength">Password strength:</small>
             <ul id="strengthBar">
                 <li class="point"></li>
                 <li class="point"></li>

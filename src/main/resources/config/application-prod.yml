@@ -47,22 +47,22 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: 6275f10bc8dc17fd11232d7c41623104c56f9e21
+                secret: 1eda1ed9adccb2ceb99f480e33f19fbf780560fb
                 # Token is valid 24 hours
                 tokenValidityInSeconds: 86400
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: myapp@localhost
+        baseUrl: http://my-server-url-to-change # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
-        spark:
-            enabled: false
-            host: localhost
-            port: 9999
         graphite:
             enabled: false
             host: localhost
             port: 2003
             prefix: myapp
+        prometheus:
+            enabled: false
+            endpoint: /prometheusMetrics
         logs: # Reports Dropwizard metrics in the logs
             enabled: false
             reportFrequency: 60 # in seconds

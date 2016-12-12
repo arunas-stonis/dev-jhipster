@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.9.1",
+    "jhipsterVersion": "3.12.1",
     "baseName": "myapp",
     "packageName": "com.mycompany.myapp",
     "packageFolder": "com/mycompany/myapp",
@@ -16,10 +16,10 @@
     "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "jwtSecretKey": "6275f10bc8dc17fd11232d7c41623104c56f9e21",
+    "jwtSecretKey": "1eda1ed9adccb2ceb99f480e33f19fbf780560fb",
     "useSass": false,
     "applicationType": "monolith",
-    "angularVersion": "angular2",
+    "clientFw": "angular2",
     "testFrameworks": [
       "gatling"
     ],

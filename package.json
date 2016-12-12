@@ -7,14 +7,14 @@
     "node_modules"
   ],
   "dependencies": {
-    "@angular/common": "2.3.0",
-    "@angular/compiler": "2.3.0",
-    "@angular/core": "2.3.0",
-    "@angular/forms": "2.3.0",
-    "@angular/http": "2.3.0",
-    "@angular/platform-browser": "2.3.0",
-    "@angular/platform-browser-dynamic": "2.3.0",
-    "@angular/upgrade": "2.3.0",
+    "@angular/common": "2.2.3",
+    "@angular/compiler": "2.2.3",
+    "@angular/core": "2.2.3",
+    "@angular/forms": "2.2.3",
+    "@angular/http": "2.2.3",
+    "@angular/platform-browser": "2.2.3",
+    "@angular/platform-browser-dynamic": "2.2.3",
+    "@angular/upgrade": "2.2.3",
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.14",
     "bootstrap": "4.0.0-alpha.5",
     "font-awesome": "4.7.0",
@@ -26,6 +26,7 @@
     "reflect-metadata": "0.1.8",
     "rxjs": "5.0.0-rc.4",
     "swagger-ui": "2.2.8",
+    "tether": "1.4.0",
     "ui-router-ng2": "1.0.0-beta.3",
     "ui-router-visualizer": "2.0.11",
     "zone.js": "0.7.2"
@@ -42,8 +43,6 @@
     "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.26.0",
     "del": "2.2.2",
-    "eslint-config-angular": "0.5.0",
-    "eslint-plugin-angular": "1.4.1",
     "event-stream": "3.3.4",
     "exports-loader": "0.6.3",
     "extract-text-webpack-plugin": "2.0.0-beta.4",
@@ -75,6 +74,7 @@
     "webpack": "2.1.0-beta.25",
     "webpack-merge": "1.0.2",
     "xml2js": "0.4.17",
+
     "yargs": "6.4.0"
   },
   "engines": {
@@ -83,7 +83,9 @@
   "scripts": {
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "webpack-dev": "webpack --watch --config webpack/webpack.dev.js",
-    "webpack-prod": "webpack -p --config webpack/webpack.prod.js"
+    "lint": "tslint src/main/webapp/app/**/*.ts --force",
+    "lint:fix": "tslint src/main/webapp/app/**/*.ts --fix --force",
+    "webpack:dev": "webpack --watch --config webpack/webpack.dev.js",
+    "webpack:prod": "webpack -p --config webpack/webpack.prod.js"
   }
 }

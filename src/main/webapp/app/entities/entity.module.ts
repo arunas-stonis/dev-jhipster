@@ -3,7 +3,6 @@ import { UIRouterModule } from 'ui-router-ng2';
 
 import { MyappSharedModule } from '../shared';
 
-
 let ENTITY_STATES = [
 
 ];

@@ -6,6 +6,8 @@
 // import 'angular-loading-bar';
 // import 'ng-file-upload';
 // import 'ng-infinite-scroll';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+
 import '../content/css/main.css';

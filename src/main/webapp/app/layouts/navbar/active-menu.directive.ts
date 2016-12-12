@@ -1,6 +1,5 @@
-import { Directive, OnInit, ElementRef } from '@angular/core';
-
-import { JhiLanguageService } from '../../shared';
+import { Directive, OnInit, ElementRef, Renderer} from '@angular/core';
+import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
 
 @Directive({
     selector: '[active-menu]',
@@ -8,24 +7,21 @@ import { JhiLanguageService } from '../../shared';
 })
 export class ActiveMenuDirective implements OnInit {
     language: string;
-    $element: any;
 
-    constructor(private el: ElementRef, private languageService: JhiLanguageService) {
-        this.$element = $(el.nativeElement);
-    }
+    constructor(private el: ElementRef, private renderer: Renderer, private translateService: TranslateService) {}
 
     ngOnInit() {
-        //TODO implement once translation is migrated
-        /*scope.$watch(function() {
-            return languageService.reload();
-        }, setActive(selectedLanguage));*/
-        function setActive(selectedLanguage) {
-            if (this.language === selectedLanguage) {
-                //tmhDynamicLocale.set(this.language);
-                this.$element.addClass('active');
-            } else {
-                this.$element.removeClass('active');
-            }
-        }
+      this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+         this.updateActiveFlag(event.lang);
+      });
+      this.updateActiveFlag(this.translateService.currentLang);
+    }
+
+    updateActiveFlag(selectedLanguage) {
+      if (this.language === selectedLanguage) {
+          this.renderer.setElementClass(this.el.nativeElement, 'active', true);
+      } else {
+          this.renderer.setElementClass(this.el.nativeElement, 'active', false);
+      }
     }
 }
