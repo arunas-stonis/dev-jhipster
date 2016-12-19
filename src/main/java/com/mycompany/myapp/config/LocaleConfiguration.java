@@ -1,6 +1,6 @@
 package com.mycompany.myapp.config;
 
-import com.mycompany.myapp.config.locale.AngularCookieLocaleResolver;
+import io.github.jhipster.config.locale.AngularCookieLocaleResolver;
 
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.EnvironmentAware;

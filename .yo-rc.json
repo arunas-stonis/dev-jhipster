@@ -16,10 +16,11 @@
     "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "jwtSecretKey": "1eda1ed9adccb2ceb99f480e33f19fbf780560fb",
+    "jwtSecretKey": "362bc01ca2130fac1826b3c45f95f2ee0bafac91",
     "useSass": false,
+    "clientPackageManager": "npm",
     "applicationType": "monolith",
-    "clientFw": "angular2",
+    "clientFramework": "angular2",
     "testFrameworks": [
       "gatling"
     ],

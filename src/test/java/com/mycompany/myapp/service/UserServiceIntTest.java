@@ -5,13 +5,12 @@ import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.UserRepository;
 import java.time.ZonedDateTime;
 import com.mycompany.myapp.service.util.RandomUtil;
-import java.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.inject.Inject;
 import java.util.Optional;
 import java.util.List;
 
@@ -26,10 +25,10 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest(classes = MyappApp.class)
 public class UserServiceIntTest {
 
-    @Inject
+    @Autowired
     private UserRepository userRepository;
 
-    @Inject
+    @Autowired
     private UserService userService;
 
     @Test

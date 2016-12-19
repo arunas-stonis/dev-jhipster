@@ -31,15 +31,15 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <javax.inject.version>1</javax.inject.version>
         <mapstruct.version>1.1.0.Final</mapstruct.version>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <maven-resources-plugin.version>3.0.1</maven-resources-plugin.version>
+        <node.version>v6.9.2</node.version>
+        <npm.version>3.10.9</npm.version>
         <sortpom-maven-plugin.version>2.5.0</sortpom-maven-plugin.version>
         <metrics-spring.version>3.1.3</metrics-spring.version>
-        <prometheus-simpleclient.version>0.0.18</prometheus-simpleclient.version>
         <logstash-logback-encoder.version>4.7</logstash-logback-encoder.version>
         <run.addResources>false</run.addResources>
         <spring-security.version>4.1.3.RELEASE</spring-security.version>
@@ -79,6 +79,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.github.jhipster</groupId>
+            <artifactId>jhipster</artifactId>
+            <version>0.0.6</version>
+        </dependency>
+        <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
         </dependency>
@@ -86,10 +91,6 @@
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-annotation</artifactId>
             <version>${dropwizard-metrics.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.dropwizard.metrics</groupId>
-            <artifactId>metrics-graphite</artifactId>
         </dependency>
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
@@ -120,21 +121,6 @@
                     <groupId>io.dropwizard.metrics</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient</artifactId>
-            <version>${prometheus-simpleclient.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient_servlet</artifactId>
-            <version>${prometheus-simpleclient.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient_dropwizard</artifactId>
-            <version>${prometheus-simpleclient.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -228,11 +214,6 @@
             <groupId>com.jcraft</groupId>
             <artifactId>jzlib</artifactId>
             <version>1.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>${javax.inject.version}</version>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -659,17 +640,8 @@
                                     <goal>install-node-and-npm</goal>
                                 </goals>
                                 <configuration>
-                                    <nodeVersion>v6.9.2</nodeVersion>
-                                    <npmVersion>3.10.9</npmVersion>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>npm install</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <configuration>
-                                    <arguments>install</arguments>
+                                    <nodeVersion>${node.version}</nodeVersion>
+                                    <npmVersion>${npm.version}</npmVersion>
                                 </configuration>
                             </execution>
                             <execution>
@@ -753,8 +725,8 @@
                                     <goal>install-node-and-npm</goal>
                                 </goals>
                                 <configuration>
-                                    <nodeVersion>v6.9.1</nodeVersion>
-                                    <npmVersion>3.10.9</npmVersion>
+                                    <nodeVersion>${node.version}</nodeVersion>
+                                    <npmVersion>${npm.version}</npmVersion>
                                 </configuration>
                             </execution>
                             <execution>
@@ -881,6 +853,44 @@
                 <!-- default Spring profiles -->
                 <spring.profiles.active>dev,swagger</spring.profiles.active>
             </properties>
+        </profile>
+        <profile>
+            <!--
+                Profile for monitoring the application with Graphite.
+            -->
+            <id>graphite</id>
+            <dependencies>
+                <dependency>
+                    <groupId>io.dropwizard.metrics</groupId>
+                    <artifactId>metrics-graphite</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <!--
+                Profile for monitoring the application with Prometheus.
+            -->
+            <id>prometheus</id>
+            <properties>
+                <prometheus-simpleclient.version>0.0.18</prometheus-simpleclient.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>io.prometheus</groupId>
+                    <artifactId>simpleclient</artifactId>
+                    <version>${prometheus-simpleclient.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.prometheus</groupId>
+                    <artifactId>simpleclient_servlet</artifactId>
+                    <version>${prometheus-simpleclient.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.prometheus</groupId>
+                    <artifactId>simpleclient_dropwizard</artifactId>
+                    <version>${prometheus-simpleclient.version}</version>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <!--

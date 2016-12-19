@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,8 +21,11 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
 
-    @Inject
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(final String login) {

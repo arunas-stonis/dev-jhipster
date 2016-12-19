@@ -52,18 +52,16 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: 1eda1ed9adccb2ceb99f480e33f19fbf780560fb
+                secret: 362bc01ca2130fac1826b3c45f95f2ee0bafac91
                 # Token is valid 24 hours
                 tokenValidityInSeconds: 86400
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
-    swagger:
-        title: myapp API
-        description: myapp API documentation
-        version: 0.0.1
-        termsOfServiceUrl:
-        contactName:
-        contactUrl:
-        contactEmail:
-        license:
-        licenseUrl:
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+# ===================================================================
+
+application:

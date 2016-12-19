@@ -1,8 +1,8 @@
 package com.mycompany.myapp;
 
-import com.mycompany.myapp.config.Constants;
 import com.mycompany.myapp.config.DefaultProfileUtil;
-import com.mycompany.myapp.config.JHipsterProperties;
+
+import io.github.jhipster.config.JHipsterConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,21 +15,23 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 
 @ComponentScan
-@EnableAutoConfiguration(exclude = { MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class })
-@EnableConfigurationProperties({ JHipsterProperties.class })
+@EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
+@EnableConfigurationProperties()
 public class MyappApp {
 
     private static final Logger log = LoggerFactory.getLogger(MyappApp.class);
 
-    @Inject
-    private Environment env;
+    private final Environment env;
+
+    public MyappApp(Environment env) {
+        this.env = env;
+    }
 
     /**
      * Initializes myapp.
@@ -42,11 +44,11 @@ public class MyappApp {
     public void initApplication() {
         log.info("Running with Spring profile(s) : {}", Arrays.toString(env.getActiveProfiles()));
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-        if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(Constants.SPRING_PROFILE_PRODUCTION)) {
+        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
             log.error("You have misconfigured your application! It should not run " +
                 "with both the 'dev' and 'prod' profiles at the same time.");
         }
-        if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(Constants.SPRING_PROFILE_CLOUD)) {
+        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_CLOUD)) {
             log.error("You have misconfigured your application! It should not" +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
@@ -65,11 +67,12 @@ public class MyappApp {
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application '{}' is running! Access URLs:\n\t" +
                 "Local: \t\thttp://localhost:{}\n\t" +
-                "External: \thttp://{}:{}\n----------------------------------------------------------",
+                "External: \thttp://{}:{}\n\t" +
+                "Profile(s): \t{}\n----------------------------------------------------------",
             env.getProperty("spring.application.name"),
             env.getProperty("server.port"),
             InetAddress.getLocalHost().getHostAddress(),
-            env.getProperty("server.port"));
-
+            env.getProperty("server.port"),
+            Arrays.toString(env.getActiveProfiles()));
     }
 }

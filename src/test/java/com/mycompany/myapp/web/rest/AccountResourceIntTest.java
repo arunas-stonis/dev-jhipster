@@ -15,14 +15,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import javax.inject.Inject;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,13 +41,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = MyappApp.class)
 public class AccountResourceIntTest {
 
-    @Inject
+    @Autowired
     private UserRepository userRepository;
 
-    @Inject
+    @Autowired
     private AuthorityRepository authorityRepository;
 
-    @Inject
+    @Autowired
     private UserService userService;
 
     @Mock
@@ -66,15 +65,11 @@ public class AccountResourceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail((User) anyObject());
 
-        AccountResource accountResource = new AccountResource();
-        ReflectionTestUtils.setField(accountResource, "userRepository", userRepository);
-        ReflectionTestUtils.setField(accountResource, "userService", userService);
-        ReflectionTestUtils.setField(accountResource, "mailService", mockMailService);
+        AccountResource accountResource =
+            new AccountResource(userRepository, userService, mockMailService);
 
-        AccountResource accountUserMockResource = new AccountResource();
-        ReflectionTestUtils.setField(accountUserMockResource, "userRepository", userRepository);
-        ReflectionTestUtils.setField(accountUserMockResource, "userService", mockUserService);
-        ReflectionTestUtils.setField(accountUserMockResource, "mailService", mockMailService);
+        AccountResource accountUserMockResource =
+            new AccountResource(userRepository, mockUserService, mockMailService);
 
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource).build();
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(accountUserMockResource).build();
@@ -111,7 +106,7 @@ public class AccountResourceIntTest {
         user.setLogin("test");
         user.setFirstName("john");
         user.setLastName("doe");
-        user.setEmail("john.doe@jhipter.com");
+        user.setEmail("john.doe@jhipster.com");
         user.setAuthorities(authorities);
         when(mockUserService.getUserWithAuthorities()).thenReturn(user);
 
@@ -122,7 +117,7 @@ public class AccountResourceIntTest {
                 .andExpect(jsonPath("$.login").value("test"))
                 .andExpect(jsonPath("$.firstName").value("john"))
                 .andExpect(jsonPath("$.lastName").value("doe"))
-                .andExpect(jsonPath("$.email").value("john.doe@jhipter.com"))
+                .andExpect(jsonPath("$.email").value("john.doe@jhipster.com"))
                 .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
     }
 

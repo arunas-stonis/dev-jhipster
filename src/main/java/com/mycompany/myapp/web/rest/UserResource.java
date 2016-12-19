@@ -21,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -57,14 +56,19 @@ public class UserResource {
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
-    @Inject
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Inject
-    private MailService mailService;
+    private final MailService mailService;
 
-    @Inject
-    private UserService userService;
+    private final UserService userService;
+
+    public UserResource(UserRepository userRepository, MailService mailService,
+            UserService userService) {
+
+        this.userRepository = userRepository;
+        this.mailService = mailService;
+        this.userService = userService;
+    }
 
     /**
      * POST  /users  : Creates a new user.

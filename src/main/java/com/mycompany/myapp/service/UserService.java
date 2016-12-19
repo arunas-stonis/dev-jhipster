@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import javax.inject.Inject;
 import java.util.*;
 
 /**
@@ -26,14 +25,17 @@ public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
-    @Inject
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    @Inject
-    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Inject
-    private AuthorityRepository authorityRepository;
+    private final AuthorityRepository authorityRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authorityRepository = authorityRepository;
+    }
 
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
