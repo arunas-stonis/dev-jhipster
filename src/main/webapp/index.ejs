@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>myapp</title>
+    <title>jhipster</title>
     <meta name="description" content="">
     <meta name="google" value="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,8 +23,8 @@
         r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
         ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>-->
-    {{#if htmlWebpackPlugin.options.data.DEBUG_INFO_ENABLED}}
+    <% if (htmlWebpackPlugin.options.data.DEBUG_INFO_ENABLED) { //this is processed by webpack %>
     <script src="//unpkg.com/ui-router-visualizer@2"></script>
-    {{/if}}
+    <% } %>
 </body>
 </html>

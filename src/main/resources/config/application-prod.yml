@@ -20,7 +20,7 @@ spring:
     data:
         mongodb:
             uri: mongodb://localhost:27017
-            database: myapp
+            database: jhipster
     mail:
         host: localhost
         port: 25
@@ -45,13 +45,11 @@ jhipster:
         cache: # Used by the CachingHttpHeadersFilter
             timeToLiveInDays: 1461
     security:
-        authentication:
-            jwt:
-                secret: 362bc01ca2130fac1826b3c45f95f2ee0bafac91
-                # Token is valid 24 hours
-                tokenValidityInSeconds: 86400
+        rememberMe:
+            # security key (this key should be unique for your application, and kept secret)
+            key: b4f755b9324c8e1ca911fe7903b4aa5416e54327
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: myapp@localhost
+        from: jhipster@localhost
         baseUrl: http://my-server-url-to-change # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
@@ -59,7 +57,7 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: myapp
+            prefix: jhipster
         prometheus:
             enabled: false
             endpoint: /prometheusMetrics

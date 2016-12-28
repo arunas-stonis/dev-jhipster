@@ -1,8 +1,9 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import {
-    MyappSharedLibsModule,
-    MyappSharedCommonModule,
+    JhipsterSharedLibsModule,
+    JhipsterSharedCommonModule,
     CSRFService,
     AuthService,
     AuthServerProvider,
@@ -18,8 +19,8 @@ import {
 
 @NgModule({
     imports: [
-        MyappSharedLibsModule,
-        MyappSharedCommonModule
+        JhipsterSharedLibsModule,
+        JhipsterSharedCommonModule
     ],
     declarations: [
         JhiLoginModalComponent,
@@ -35,16 +36,18 @@ import {
         Principal,
         CSRFService,
         AuthServerProvider,
-        AuthService
+        AuthService,
+        DatePipe
     ],
     entryComponents: [JhiLoginModalComponent],
     exports: [
-        MyappSharedCommonModule,
+        JhipsterSharedCommonModule,
         JhiLoginModalComponent,
         HasAuthorityDirective,
-        HasAnyAuthorityDirective
+        HasAnyAuthorityDirective,
+        DatePipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
-export class MyappSharedModule {}
+export class JhipsterSharedModule {}

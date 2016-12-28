@@ -6,9 +6,10 @@ import { StateService } from 'ui-router-ng2';
 import { User } from './user.model';
 import { UserService } from './user.service';
 import { AlertService, EventManager, ITEMS_PER_PAGE, PaginationUtil, ParseLinks, Principal } from '../../shared';
+import { PaginationConfig } from "../../blocks/config/uib-pagination.config";
 
 @Component({
-    selector: 'user-mgmt',
+    selector: 'jhi-user-mgmt',
     templateUrl: './user-management.component.html'
 })
 export class UserMgmtComponent implements OnInit {
@@ -33,7 +34,8 @@ export class UserMgmtComponent implements OnInit {
         private principal: Principal,
         private $state: StateService,
         private eventManager: EventManager,
-        private paginationUtil: PaginationUtil
+        private paginationUtil: PaginationUtil,
+        private paginationConfig: PaginationConfig
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = paginationUtil.parsePage($state.params['page']);
@@ -53,6 +55,7 @@ export class UserMgmtComponent implements OnInit {
     registerChangeInUsers() {
         this.eventManager.subscribe('userListModification', (response) => this.loadAll());
     }
+
     setActive (user, isActivated) {
         user.activated = isActivated;
 
@@ -68,31 +71,21 @@ export class UserMgmtComponent implements OnInit {
                 }
             });
     }
+
     loadAll () {
         this.userService.query({
             page: this.page -1,
             size: this.itemsPerPage,
-            sort: this.sort()
-        }).subscribe(
+            sort: this.sort()}).subscribe(
             (res: Response) => this.onSuccess(res.json(), res.headers),
             (res: Response) => this.onError(res.json())
         );
     }
-    private onSuccess (data, headers) {
-        //hide anonymous user from user management: it's a required user for Spring Security
-        for (let i in data) {
-            if (data[i]['login'] === 'anonymoususer') {
-                data.splice(i, 1);
-            }
-        }
-        this.links = this.parseLinks.parse(headers.get('link'));
-        this.totalItems = headers.get('X-Total-Count');
-        this.queryCount = this.totalItems;
-        this.users = data;
+
+    trackIdentity (index, item: User) {
+        return item.id;
     }
-    private onError (error) {
-        this.alertService.error(error.error, error.message, null);
-    }
+
     sort () {
         let result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== 'id') {
@@ -100,16 +93,37 @@ export class UserMgmtComponent implements OnInit {
         }
         return result;
     }
+
     loadPage (page: number) {
-        if(page !== this.previousPage) {
+        if (page !== this.previousPage) {
             this.previousPage = page;
             this.transition();
         }
     }
+
     transition () {
         this.$state.transitionTo(this.$state.$current, {
             page: this.page,
             sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
         });
+    }
+
+    private onSuccess(data, headers) {
+        // hide anonymous user from user management: it's a required user for Spring Security
+        let hiddenUsersSize = 0;
+        for (let i in data) {
+            if (data[i]['login'] === 'anonymoususer') {
+                data.splice(i, 1);
+                hiddenUsersSize++;
+            }
+        }
+        this.links = this.parseLinks.parse(headers.get('link'));
+        this.totalItems = headers.get('X-Total-Count') - hiddenUsersSize;
+        this.queryCount = this.totalItems;
+        this.users = data;
+    }
+
+    private onError (error) {
+        this.alertService.error(error.error, error.message, null);
     }
 }

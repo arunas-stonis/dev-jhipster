@@ -7,6 +7,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class JhiMetricsMonitoringModalComponent implements OnInit {
 
+    threadDumpFilter: any;
     threadDump: any;
     threadDumpAll: number = 0;
     threadDumpBlocked: number = 0;

@@ -20,7 +20,7 @@ import { createTranslatePartialLoader } from './language/translate-partial-loade
         NgbModule
     ]
 })
-export class MyappSharedLibsModule {
+export class JhipsterSharedLibsModule {
     /*static forRoot(): ModuleWithProviders {
         return {
             ngModule: Angular2TestSharedLibsModule,

@@ -16,12 +16,11 @@ export class TranslatePartialLoader implements TranslateLoader {
         let combinedObject = new Object();
         let oldObsevers;
         let newObserver;
-        this.locations.forEach((value) => {
+        this.locations && this.locations.forEach((value) => {
             newObserver = this.getPartFile(value, combinedObject, lang);
             if (oldObsevers == null) {
                 oldObsevers = newObserver;
-            }
-            else {
+            } else {
                 oldObsevers = oldObsevers.merge(newObserver);
             }
         });
@@ -33,10 +32,14 @@ export class TranslatePartialLoader implements TranslateLoader {
             this.http.get(`${this.prefix}/${lang}/${part}${this.suffix}`).subscribe((res) => {
                 let responseObj = res.json();
                 Object.keys(responseObj).forEach(key=>{
-                    combinedObject[key] = responseObj[key];
+                    if(!combinedObject[key]) {
+                        combinedObject[key] = responseObj[key];
+                    }else{
+                        Object.assign(combinedObject[key],responseObj[key]);
+                    }
                 });
                 observer.next(combinedObject);
-                //call complete to close this stream (like a promise)
+                // Call complete to close this stream (like a promise)
                 observer.complete();
             });
         });

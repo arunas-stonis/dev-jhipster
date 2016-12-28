@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Rx';
 @Component({
     selector: 'jhi-alert-error',
     template: `
-        <div class="alerts">
+        <div class="alerts" role="alert">
             <div *ngFor="let alert of alerts"  [ngClass]="{\'alert.position\': true, \'toast\': alert.toast}">
                 <ngb-alert type="{{alert.type}}" close="alert.close(alerts)"><pre>{{ alert.msg }}</pre></ngb-alert>
             </div>
@@ -22,20 +22,20 @@ export class JhiAlertErrorComponent implements OnDestroy {
     constructor(private alertService: AlertService, private eventManager: EventManager, private translateService: TranslateService) {
         this.alerts = [];
 
-        this.cleanHttpErrorListener = eventManager.subscribe('myappApp.httpError', (response) => {
+        this.cleanHttpErrorListener = eventManager.subscribe('jhipsterApp.httpError', (response) => {
             let i;
             let httpResponse = response.content;
             switch (httpResponse.status) {
                 // connection refused, server not reachable
                 case 0:
-                    this.addErrorAlert('Server not reachable','error.server.not.reachable');
+                    this.addErrorAlert('Server not reachable', 'error.server.not.reachable');
                     break;
 
                 case 400:
                     let arr = Array.from(httpResponse.headers._headers);
                     let headers = [];
-                    for(i = 0; i < arr.length; i++){
-                        if(arr[i][0].endsWith('app-error') || arr[i][0].endsWith('app-params')) {
+                    for (i = 0; i < arr.length; i++) {
+                        if (arr[i][0].endsWith('app-error') || arr[i][0].endsWith('app-params')) {
                             headers.push(arr[i][0]);
                         }
                     }
@@ -51,8 +51,10 @@ export class JhiAlertErrorComponent implements OnDestroy {
                             let fieldError = fieldErrors[i];
                             // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
                             let convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
-                            let fieldName = translateService.instant('myappApp.' + fieldError.objectName + '.' + convertedField);
-                            this.addErrorAlert('Field ' + fieldName + ' cannot be empty', 'error.' + fieldError.message, {fieldName: fieldName});
+                            let fieldName = translateService.instant('jhipsterApp.' +
+                                fieldError.objectName + '.' + convertedField);
+                            this.addErrorAlert(
+                                'Field ' + fieldName + ' cannot be empty', 'error.' + fieldError.message, {fieldName: fieldName});
                         }
                     } else if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().message) {
                         this.addErrorAlert(httpResponse.json().message, httpResponse.json().message, httpResponse.json());
@@ -62,21 +64,21 @@ export class JhiAlertErrorComponent implements OnDestroy {
                     break;
 
                 case 404:
-                    this.addErrorAlert('Not found','error.url.not.found');
+                    this.addErrorAlert('Not found', 'error.url.not.found');
                     break;
 
                 default:
                     if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().message) {
                         this.addErrorAlert(httpResponse.json().message);
                     } else {
-                        this.addErrorAlert(JSON.stringify(httpResponse)); //Fixme find a way to parse httpResponse
+                        this.addErrorAlert(JSON.stringify(httpResponse)); // Fixme find a way to parse httpResponse
                     }
             }
         });
     }
 
     ngOnDestroy() {
-        if(this.cleanHttpErrorListener !== undefined && this.cleanHttpErrorListener !== null){
+        if (this.cleanHttpErrorListener !== undefined && this.cleanHttpErrorListener !== null) {
             this.eventManager.destroy(this.cleanHttpErrorListener);
             this.alerts = [];
         }

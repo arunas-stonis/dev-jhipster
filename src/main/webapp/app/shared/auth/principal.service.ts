@@ -11,7 +11,7 @@ export class Principal {
 
     constructor(
         private account: AccountService
-    ){}
+    ) {}
 
     authenticate (_identity) {
         this._identity = _identity;

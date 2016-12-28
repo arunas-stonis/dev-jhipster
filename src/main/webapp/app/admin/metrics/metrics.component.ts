@@ -12,9 +12,9 @@ export class JhiMetricsMonitoringComponent implements OnInit {
     cachesStats: any = {};
     servicesStats: any = {};
     updatingMetrics: boolean = true;
-    JCACHE_KEY:string ;
+    JCACHE_KEY: string ;
 
-    constructor(private modalService: NgbModal, private metricsService:JhiMetricsService) {
+    constructor(private modalService: NgbModal, private metricsService: JhiMetricsService) {
         this.JCACHE_KEY = 'jcache.statistics';
     }
 

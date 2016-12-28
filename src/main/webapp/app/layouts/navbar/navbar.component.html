@@ -5,14 +5,10 @@
         </a>
         <a class="navbar-brand logo float-xs-right" uiSref="home" (click)="collapseNavbar()">
             <span class="logo-img"></span>
-            <span jhi-translate="global.title" class="navbar-title">Myapp</span> <span class="navbar-version">{{version}}</span>
+            <span jhi-translate="global.title" class="navbar-title">Jhipster</span> <span class="navbar-version">{{version}}</span>
         </a>
     </div>
     <div class="collapse navbar-toggleable-md float-lg-right" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
-        <a class="navbar-brand logo" uiSref="home" (click)="collapseNavbar()">
-            <span class="logo-img"></span>
-            <span jhi-translate="global.title" class="navbar-title">Myapp</span> <span class="navbar-version">{{version}}</span>
-        </a>
         <ul class="nav navbar-nav float-lg-right">
             <li class="nav-item" uiSrefActive="active">
                 <a class="nav-link" uiSref="home" (click)="collapseNavbar()">
@@ -56,6 +52,12 @@
                         <a class="dropdown-item" uiSref="password" uiSrefActive="active" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
                             <span jhi-translate="global.menu.account.password">Password</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" uiSref="sessions" uiSrefActive="active" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-cloud" aria-hidden="true"></i>
+                            <span jhi-translate="global.menu.account.sessions">Sessions</span>
                         </a>
                     </li>
                     <li *ngSwitchCase="true">
@@ -142,7 +144,7 @@
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu *ngIf="languages.length > 1">
                     <li *ngFor="let language of languages">
-                        <a class="dropdown-item" active-menu="{{language}}" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>
+                        <a class="dropdown-item" [jhiActiveMenu]="language" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>
                     </li>
                 </ul>
             </li>

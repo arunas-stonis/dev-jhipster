@@ -25,7 +25,7 @@ spring:
     data:
         mongodb:
             uri: mongodb://localhost:27017
-            database: myapp
+            database: jhipster
     mail:
         host: localhost
         port: 25
@@ -44,13 +44,11 @@ server:
 
 jhipster:
     security:
-        authentication:
-            jwt:
-                secret: my-secret-token-to-change-in-production
-                # Token is valid 24 hours
-                tokenValidityInSeconds: 86400
+        rememberMe:
+            # security key (this key should be unique for your application, and kept secret)
+            key: b4f755b9324c8e1ca911fe7903b4aa5416e54327
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: myapp@localhost
+        from: jhipster@localhost
         baseUrl: http://127.0.0.1:8080
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
@@ -58,7 +56,7 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: myapp
+            prefix: jhipster
         prometheus: # Use the "prometheus" Maven profile to have the Prometheus dependencies
             enabled: false
             endpoint: /prometheusMetrics

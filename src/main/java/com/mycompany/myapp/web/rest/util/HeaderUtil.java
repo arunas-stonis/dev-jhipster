@@ -16,28 +16,28 @@ public final class HeaderUtil {
 
     public static HttpHeaders createAlert(String message, String param) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-myappApp-alert", message);
-        headers.add("X-myappApp-params", param);
+        headers.add("X-jhipsterApp-alert", message);
+        headers.add("X-jhipsterApp-params", param);
         return headers;
     }
 
     public static HttpHeaders createEntityCreationAlert(String entityName, String param) {
-        return createAlert("myappApp." + entityName + ".created", param);
+        return createAlert("jhipsterApp." + entityName + ".created", param);
     }
 
     public static HttpHeaders createEntityUpdateAlert(String entityName, String param) {
-        return createAlert("myappApp." + entityName + ".updated", param);
+        return createAlert("jhipsterApp." + entityName + ".updated", param);
     }
 
     public static HttpHeaders createEntityDeletionAlert(String entityName, String param) {
-        return createAlert("myappApp." + entityName + ".deleted", param);
+        return createAlert("jhipsterApp." + entityName + ".deleted", param);
     }
 
     public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
         log.error("Entity creation failed, {}", defaultMessage);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-myappApp-error", "error." + errorKey);
-        headers.add("X-myappApp-params", entityName);
+        headers.add("X-jhipsterApp-error", "error." + errorKey);
+        headers.add("X-jhipsterApp-params", entityName);
         return headers;
     }
 }

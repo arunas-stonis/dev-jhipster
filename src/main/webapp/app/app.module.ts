@@ -4,14 +4,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { UIRouterModule } from 'ui-router-ng2';
 import { Ng2Webstorage } from 'ng2-webstorage';
 
-import { MyappSharedModule } from './shared';
-import { MyappAdminModule } from './admin/admin.module'; //TODO these couldn't be used from barrels due to an error
-import { MyappAccountModule } from './account/account.module';
+import { JhipsterSharedModule } from './shared';
+import { JhipsterAdminModule } from './admin/admin.module';
+import { JhipsterEntityModule } from './entities/entity.module';
+import { JhipsterAccountModule } from './account/account.module';
 
 import { appState } from './app.state';
 import { HomeComponent, homeState } from './home';
 import { JhiRouterConfig } from './blocks/config/router.config';
-import { localStorageConfig } from './blocks/config/localstorage.config';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 
@@ -26,8 +26,6 @@ import {
     errorState,
     accessdeniedState
 } from './layouts';
-
-localStorageConfig();
 
 let routerConfig = {
     configClass: JhiRouterConfig,
@@ -44,10 +42,11 @@ let routerConfig = {
     imports: [
         BrowserModule,
         UIRouterModule.forRoot(routerConfig),
-        Ng2Webstorage,
-        MyappSharedModule,
-        MyappAdminModule,
-        MyappAccountModule
+        Ng2Webstorage.forRoot({ prefix: 'jhi'}),
+        JhipsterSharedModule,
+        JhipsterAdminModule,
+        JhipsterEntityModule,
+        JhipsterAccountModule
     ],
     declarations: [
         JhiMainComponent,
@@ -67,4 +66,4 @@ let routerConfig = {
     ],
     bootstrap: [ JhiMainComponent ]
 })
-export class MyappAppModule {}
+export class JhipsterAppModule {}

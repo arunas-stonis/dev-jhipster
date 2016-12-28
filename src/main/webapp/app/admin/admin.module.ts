@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UIRouterModule } from 'ui-router-ng2';
 
-import { MyappSharedModule, ParseLinks } from '../shared';
+import { JhipsterSharedModule, ParseLinks } from '../shared';
 
 import {
     AuditsComponent,
@@ -53,7 +53,7 @@ let ADMIN_STATES = [
 
 @NgModule({
     imports: [
-        MyappSharedModule,
+        JhipsterSharedModule,
         UIRouterModule.forChild({ states: ADMIN_STATES })
     ],
     declarations: [
@@ -87,4 +87,4 @@ let ADMIN_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class MyappAdminModule {}
+export class JhipsterAdminModule {}

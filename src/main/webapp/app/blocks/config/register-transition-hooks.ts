@@ -3,8 +3,8 @@ import { Principal, StateStorageService, AuthService, JhiLanguageService } from 
 
 export function registerTransitionHooks($transitions: TransitionService) {
     $transitions.onStart({}, (transition: Transition) => {
-        let $storageService= transition.injector().get(StateStorageService);
-        $storageService.storeDestinationState(transition.to(),transition.params(),transition.from());
+        let $storageService = transition.injector().get(StateStorageService);
+        $storageService.storeDestinationState(transition.to(), transition.params(), transition.from());
         let principal = transition.injector().get(Principal);
         let auth = transition.injector().get(AuthService);
         if (principal.isIdentityResolved()) {

@@ -8,10 +8,10 @@ import { JhiHealthModalComponent } from './health-modal.component';
     templateUrl: './health.component.html',
 })
 export class JhiHealthCheckComponent implements OnInit {
-    healthData:any;
-    updatingHealth:boolean;
+    healthData: any;
+    updatingHealth: boolean;
 
-    constructor(private modalService: NgbModal, private healthService:JhiHealthService) {}
+    constructor(private modalService: NgbModal, private healthService: JhiHealthService) {}
 
     ngOnInit() {
         this.refresh();

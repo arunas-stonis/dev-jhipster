@@ -1,4 +1,4 @@
-# myapp
+# jhipster
 
 This application was generated using JHipster 3.12.1, you can find documentation and help at [https://jhipster.github.io/documentation-archive/v3.12.1](https://jhipster.github.io/documentation-archive/v3.12.1).
 
@@ -31,7 +31,7 @@ For further instructions on how to develop with JHipster, have a look at [Using 
 
 ## Building for production
 
-To optimize the myapp application for production, run:
+To optimize the jhipster application for production, run:
 
     ./mvnw -Pprod clean package
 
@@ -57,11 +57,6 @@ Unit tests are run by [Karma][] and written with [Jasmine][]. They're located in
     gulp test
 
 
-### Other tests
-
-Performance tests are run by [Gatling][] and written in Scala. They're located in `src/test/gatling` and can be run with:
-
-    ./mvnw gatling:execute
 
 For more information, refer to the [Running tests page][].
 
@@ -100,7 +95,7 @@ To set up a CI environment, consult the [Setting up Continuous Integration][] pa
 [Running tests page]: https://jhipster.github.io/documentation-archive/v3.12.1/running-tests/
 [Setting up Continuous Integration]: https://jhipster.github.io/documentation-archive/v3.12.1/setting-up-ci/
 
-[Gatling]: http://gatling.io/
+
 [Node.js]: https://nodejs.org/
 [Bower]: http://bower.io/
 [Gulp]: http://gulpjs.com/

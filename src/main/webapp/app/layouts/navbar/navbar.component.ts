@@ -8,7 +8,7 @@ import { JhiLanguageService, Principal, LoginModalService, LoginService } from '
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 
 @Component({
-    selector: 'navbar',
+    selector: 'jhi-navbar',
     templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private $state: StateService,
-        private loginService : LoginService,
+        private loginService: LoginService,
         private languageService: JhiLanguageService,
         private principal: Principal,
         private loginModalService: LoginModalService,

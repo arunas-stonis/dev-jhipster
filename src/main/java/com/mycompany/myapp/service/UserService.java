@@ -3,6 +3,7 @@ package com.mycompany.myapp.service;
 import com.mycompany.myapp.domain.Authority;
 import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.AuthorityRepository;
+import com.mycompany.myapp.repository.PersistentTokenRepository;
 import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.security.AuthoritiesConstants;
 import com.mycompany.myapp.security.SecurityUtils;
@@ -14,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -29,11 +31,14 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final PersistentTokenRepository persistentTokenRepository;
+
     private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.persistentTokenRepository = persistentTokenRepository;
         this.authorityRepository = authorityRepository;
     }
 
@@ -142,26 +147,30 @@ public class UserService {
         });
     }
 
-    public void updateUser(String id, String login, String firstName, String lastName, String email,
-        boolean activated, String langKey, Set<String> authorities) {
+    /**
+     * Method to update a user, and return the modified user object, if the update was successful.
+     */
+    public Optional<ManagedUserVM> updateUser(ManagedUserVM userUpdate) {
 
-        Optional.of(userRepository
-            .findOne(id))
-            .ifPresent(user -> {
-                user.setLogin(login);
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email);
-                user.setActivated(activated);
-                user.setLangKey(langKey);
+        return Optional.of(userRepository
+            .findOne(userUpdate.getId()))
+            .map(user -> {
+                user.setLogin(userUpdate.getLogin());
+                user.setFirstName(userUpdate.getFirstName());
+                user.setLastName(userUpdate.getLastName());
+                user.setEmail(userUpdate.getEmail());
+                user.setActivated(userUpdate.isActivated());
+                user.setLangKey(userUpdate.getLangKey());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
-                authorities.forEach(
-                    authority -> managedAuthorities.add(authorityRepository.findOne(authority))
-                );
+                userUpdate.getAuthorities().stream()
+                    .map(authorityRepository::findOne)
+                    .forEach(managedAuthorities::add);
                 userRepository.save(user);
                 log.debug("Changed Information for User: {}", user);
-            });
+                return user;
+            })
+            .map(ManagedUserVM::new);
     }
 
     public void deleteUser(String login) {
@@ -198,6 +207,21 @@ public class UserService {
          return user;
     }
 
+    /**
+     * Persistent Token are used for providing automatic authentication, they should be automatically deleted after
+     * 30 days.
+     * <p>
+     * This is scheduled to get fired everyday, at midnight.
+     * </p>
+     */
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void removeOldPersistentTokens() {
+        LocalDate now = LocalDate.now();
+        persistentTokenRepository.findByTokenDateBefore(now.minusMonths(1)).forEach(token -> {
+            log.debug("Deleting token {}", token.getSeries());
+            persistentTokenRepository.delete(token);
+        });
+    }
 
     /**
      * Not activated users should be automatically deleted after 3 days.

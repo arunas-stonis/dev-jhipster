@@ -8,23 +8,28 @@ import { User } from './user.model';
 export class UserService {
     constructor(private http: Http) { }
 
-    create(user:User): Observable<Response> {
+    create(user: User): Observable<Response> {
         return this.http.post(`api/users`, user);
     }
 
-    update(user:User): Observable<Response> {
+    update(user: User): Observable<Response> {
         return this.http.put(`api/users`, user);
     }
 
-    find(login:string): Observable<User> {
+    find(login: string): Observable<User> {
         return this.http.get(`api/users/${login}`).map((res: Response) => res.json());
     }
 
-    query(req: any): Observable<Response> {
+    query(req?: any): Observable<Response> {
         let params: URLSearchParams = new URLSearchParams();
-        params.set('page', req.page);
-        params.set('size', req.size);
-        params.set('sort', req.sort);
+        if(req) {
+            params.set('page', req.page);
+            params.set('size', req.size);
+            if(req.sort){
+                params.paramsMap.set('sort', req.sort);
+            }
+            params.set('filter', req.filter);
+        }
 
         let options = {
             search: params
@@ -33,7 +38,7 @@ export class UserService {
         return this.http.get('api/users', options);
     }
 
-    delete(login:string): Observable<Response> {
+    delete(login: string): Observable<Response> {
         return this.http.delete(`api/users/${login}`);
     }
 }

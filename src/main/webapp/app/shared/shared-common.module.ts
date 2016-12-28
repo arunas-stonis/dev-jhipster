@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { MissingTranslationHandler } from 'ng2-translate/ng2-translate';
 
 import {
-    MyappSharedLibsModule,
+    JhipsterSharedLibsModule,
     TruncateCharactersPipe,
     TruncateWordsPipe,
     CapitalizePipe,
@@ -20,16 +20,20 @@ import {
     alertServiceProvider,
     JhiAlertComponent,
     JhiAlertErrorComponent,
+    JhiSortDirective,
+    JhiSortByDirective,
     PaginationUtil,
     ParseLinks,
     DataUtils,
     DateUtils,
-    EventManager
+    EventManager,
+    JhSortDirective,
+    JhSortByDirective
 } from './';
 
 @NgModule({
     imports: [
-        MyappSharedLibsModule
+        JhipsterSharedLibsModule
     ],
     declarations: [
         TruncateCharactersPipe,
@@ -43,9 +47,13 @@ import {
         JhiAlertComponent,
         JhiAlertErrorComponent,
         JhiItemCountComponent,
+        JhiSortDirective,
+        JhiSortByDirective,
         MaxbytesValidator,
         MinbytesValidator,
-        ShowValidationDirective
+        ShowValidationDirective,
+        JhSortDirective,
+        JhSortByDirective
     ],
     providers: [
         JhiLanguageService,
@@ -58,7 +66,7 @@ import {
         EventManager
     ],
     exports: [
-        MyappSharedLibsModule,
+        JhipsterSharedLibsModule,
         TruncateCharactersPipe,
         TruncateWordsPipe,
         OrderByPipe,
@@ -70,9 +78,13 @@ import {
         JhiAlertComponent,
         JhiAlertErrorComponent,
         JhiItemCountComponent,
+        JhiSortDirective,
+        JhiSortByDirective,
         MaxbytesValidator,
         MinbytesValidator,
-        ShowValidationDirective
+        ShowValidationDirective,
+        JhSortDirective,
+        JhSortByDirective
     ]
 })
-export class MyappSharedCommonModule {}
+export class JhipsterSharedCommonModule {}

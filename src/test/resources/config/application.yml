@@ -13,14 +13,14 @@
 
 spring:
     application:
-        name: myapp
+        name: jhipster
     jackson:
         serialization.write_dates_as_timestamps: false
     data:
         mongodb:
             host: localhost
             port: 27117
-            database: myapp
+            database: jhipster
     mail:
         host: localhost
     mvc:
@@ -50,11 +50,9 @@ jhipster:
         maxPoolSize: 50
         queueCapacity: 10000
     security:
-        authentication:
-            jwt:
-                secret: 362bc01ca2130fac1826b3c45f95f2ee0bafac91
-                # Token is valid 24 hours
-                tokenValidityInSeconds: 86400
+        rememberMe:
+            # security key (this key should be unique for your application, and kept secret)
+            key: b4f755b9324c8e1ca911fe7903b4aa5416e54327
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
 

@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UIRouterModule } from 'ui-router-ng2';
 
-import { MyappSharedModule } from '../shared';
+import { JhipsterSharedModule } from '../shared';
 
 import {
     Register,
@@ -9,6 +9,9 @@ import {
     Password,
     PasswordResetInit,
     PasswordResetFinish,
+    SessionsService,
+    SessionsComponent,
+    sessionsState,
     PasswordStrengthBarComponent,
     RegisterComponent,
     ActivateComponent,
@@ -32,12 +35,13 @@ let ACCOUNT_STATES = [
     finishResetState,
     requestResetState,
     registerState,
+    sessionsState,
     settingsState
 ];
 
 @NgModule({
     imports: [
-        MyappSharedModule,
+        JhipsterSharedModule,
         UIRouterModule.forChild({ states: ACCOUNT_STATES })
     ],
     declarations: [
@@ -47,9 +51,11 @@ let ACCOUNT_STATES = [
         PasswordStrengthBarComponent,
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
+        SessionsComponent,
         SettingsComponent
     ],
     providers: [
+        SessionsService,
         Register,
         Activate,
         Password,
@@ -58,4 +64,4 @@ let ACCOUNT_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class MyappAccountModule {}
+export class JhipsterAccountModule {}

@@ -2,31 +2,40 @@ import { HttpInterceptable } from './http.interceptable';
 import { RequestOptionsArgs, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injector } from '@angular/core';
-import { AuthService } from '../../shared/auth/auth.service';
-import { Principal } from '../../shared/auth/principal.service';
-import {AuthServerProvider} from '../../shared/auth/auth-jwt.service';
+import { AuthServerProvider } from '../../shared/auth/auth-session.service';
+import { StateStorageService } from '../../shared/auth/state-storage.service';
+import { LoginModalService } from '../../shared/login/login-modal.service';
 
 export class AuthExpiredInterceptor extends HttpInterceptable {
 
-    constructor(private injector : Injector) {
+    constructor(private injector: Injector,
+        private stateStorageService: StateStorageService) {
+
         super();
     }
 
     requestIntercept(options?: RequestOptionsArgs): RequestOptionsArgs {
         return options;
     }
-
     responseIntercept(observable: Observable<Response>): Observable<Response> {
         let self = this;
 
-        return <Observable<Response>> observable.catch((error, source) => {
-            if(error.status === 401) {
-                let principal : Principal = self.injector.get(Principal);
+        return <Observable<Response>> observable.catch((error) => {
+            // TODO this is ng1 way...the ng2 would be more like someRouterService.subscribe(url).forEach.. this needs to be updated
+            if (error.status === 401 && error.text() !== '' && error.json().path && error.json().path.indexOf('/api/account') === -1) {
+                let authServerProvider = self.injector.get(AuthServerProvider);
+                let destination = this.stateStorageService.getDestinationState();
+                let to = destination.destination;
+                let toParams = destination.params;
+                authServerProvider.logout();
 
-                if(principal.isAuthenticated()) {
-                    let auth : AuthService = self.injector.get(AuthService);
-                    auth.authorize(true);
+                if (to.name === 'accessdenied') {
+                    self.stateStorageService.storePreviousState(to.name, toParams);
                 }
+
+                let loginServiceModal = self.injector.get(LoginModalService);
+                loginServiceModal.open();
+
             }
             return Observable.throw(error);
         });

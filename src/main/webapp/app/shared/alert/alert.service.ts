@@ -75,8 +75,8 @@ export class AlertService {
             toast: alertOptions.toast,
             position: alertOptions.position ? alertOptions.position : 'top right',
             scoped: alertOptions.scoped,
-            close: function (alerts) {
-                return this.closeAlert(this.id, alerts);
+            close: (alerts) => {
+                return this.closeAlert(alertOptions.alertId, alerts);
             }
         };
         if (!alert.scoped) {
@@ -87,7 +87,7 @@ export class AlertService {
 
     addAlert(alertOptions, extAlerts): any {
         alertOptions.alertId = this.alertId++;
-        if(alertOptions.msg !== undefined){
+        if (alertOptions.msg !== undefined) {
             alertOptions.msg = this.translateService.instant(alertOptions.msg, alertOptions.params);
         }
         let alert = this.factory(alertOptions);

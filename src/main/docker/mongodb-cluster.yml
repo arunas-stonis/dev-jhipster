@@ -1,17 +1,17 @@
 version: '2'
 services:
-    myapp-mongodb:
-        container_name: myapp-mongodb
+    jhipster-mongodb:
+        container_name: jhipster-mongodb
         image: mongo:3.2.10
         ports:
             - "27017:27017"
-        command: mongos --configdb myapp-mongodb-config
-    myapp-mongodb-node:
+        command: mongos --configdb jhipster-mongodb-config
+    jhipster-mongodb-node:
         build:
             context: .
             dockerfile: mongodb/MongoDB.Dockerfile
         command: mongod --replSet rs1 --noprealloc --smallfiles
-    myapp-mongodb-config:
+    jhipster-mongodb-config:
         image: mongo:3.2.10
-        container_name: myapp-mongodb-config
+        container_name: jhipster-mongodb-config
         command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db

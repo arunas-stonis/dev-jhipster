@@ -1,8 +1,7 @@
 import { Injector } from '@angular/core';
 import { Http, XHRBackend, RequestOptions } from '@angular/http';
 import { HttpInterceptor } from './http.interceptor';
-import { AuthInterceptor } from './auth.interceptor';
-import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
+import { StateStorageService } from '../../shared/auth/state-storage.service';
 import { AuthExpiredInterceptor } from './auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './errorhandler.interceptor';
 import { NotificationInterceptor } from './notification.interceptor';
@@ -14,17 +13,15 @@ export const customHttpProvider = () => ({
     useFactory: (
         backend: XHRBackend,
         defaultOptions: RequestOptions,
-        localStorage : LocalStorageService,
-        sessionStorage : SessionStorageService,
         injector: Injector,
+        stateStorageService: StateStorageService,
         eventManager: EventManager
     ) => new HttpInterceptor(
         backend,
         defaultOptions,
         [
-            new AuthInterceptor(localStorage, sessionStorage),
-            new AuthExpiredInterceptor(injector),
-            //other interceptors can be added here
+            new AuthExpiredInterceptor(injector, stateStorageService),
+            // Other interceptors can be added here
             new ErrorHandlerInterceptor(eventManager),
             new NotificationInterceptor()
 
@@ -34,9 +31,8 @@ export const customHttpProvider = () => ({
         XHRBackend,
         RequestOptions,
 
-        LocalStorageService,
-        SessionStorageService,
         Injector,
+        StateStorageService,
         EventManager
     ]
 });

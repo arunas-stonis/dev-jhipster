@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DateUtils {
 
-    constructor (private datePipe:DatePipe) {}
+    constructor (private datePipe: DatePipe) {}
 
     convertDateTimeFromServer (date: any) {
         if (date) {
@@ -32,5 +32,10 @@ export class DateUtils {
 
     dateformat () {
         return 'yyyy-MM-dd';
+    }
+
+    //TODO Find a better way to have Date fields because NgbDatePicker returns an object (Related to entities)
+    toDate(date: any): Date {
+        return date ? new Date(date.year,date.month-1,date.day) : null;
     }
 }

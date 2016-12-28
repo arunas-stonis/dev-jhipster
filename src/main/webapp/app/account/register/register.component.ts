@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private languageService: JhiLanguageService,
-        private loginModalService : LoginModalService,
+        private loginModalService: LoginModalService,
         private registerService: Register,
         private elementRef: ElementRef,
         private renderer: Renderer) {
@@ -40,29 +40,32 @@ export class RegisterComponent implements OnInit {
         if (this.registerAccount.password !== this.confirmPassword) {
             this.doNotMatch = 'ERROR';
         } else {
-            this.registerAccount.langKey = this.languageService.getCurrent();
             this.doNotMatch = null;
             this.error = null;
             this.errorUserExists = null;
             this.errorEmailExists = null;
-
-            this.registerService.save(this.registerAccount).subscribe(() => {
-                this.success = true;
-            }, (response) => {
-                //TODO handle this.logout(); on error
-                this.success = null;
-                if (response.status === 400 && response.data === 'login already in use') {
-                    this.errorUserExists = 'ERROR';
-                } else if (response.status === 400 && response.data === 'e-mail address already in use') {
-                    this.errorEmailExists = 'ERROR';
-                } else {
-                    this.error = 'ERROR';
-                }
+            this.languageService.getCurrent().then(key => {
+                this.registerAccount.langKey = key;
+                this.registerService.save(this.registerAccount).subscribe(() => {
+                    this.success = true;
+                }, this.processError);
             });
         }
     }
 
     openLogin() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    private processError(response) {
+        // TODO handle this.logout(); on error
+        this.success = null;
+        if (response.status === 400 && response.data === 'login already in use') {
+            this.errorUserExists = 'ERROR';
+        } else if (response.status === 400 && response.data === 'e-mail address already in use') {
+            this.errorEmailExists = 'ERROR';
+        } else {
+            this.error = 'ERROR';
+        }
     }
 }

@@ -7,7 +7,7 @@ import { JhiLanguageService } from '../../shared';
 import { EventManager } from '../../shared/service/event-manager.service';
 
 @Component({
-    selector: 'user-mgmt-dialog',
+    selector: 'jhi-user-mgmt-dialog',
     templateUrl: './user-management-dialog.component.html'
 })
 export class UserMgmtDialogComponent implements OnInit {
@@ -45,14 +45,13 @@ export class UserMgmtDialogComponent implements OnInit {
         }
     }
 
-    private onSaveSuccess (result) {
-        this.eventManager.broadcast({ name: 'userListModification', content:'OK'});
+    private onSaveSuccess(result) {
+        this.eventManager.broadcast({ name: 'userListModification', content:'OK' });
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
 
-    private onSaveError () {
+    private onSaveError() {
         this.isSaving = false;
     }
-
 }

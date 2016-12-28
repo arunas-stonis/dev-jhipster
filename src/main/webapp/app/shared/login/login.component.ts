@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { StateService } from 'ui-router-ng2';
 import { JhiLanguageService } from '../language/language.service';
@@ -10,7 +10,7 @@ import { EventManager } from '../service/event-manager.service';
     selector: 'jhi-login-modal',
     templateUrl: './login.component.html'
 })
-export class JhiLoginModalComponent implements OnInit {
+export class JhiLoginModalComponent implements OnInit, AfterViewInit {
     authenticationError: boolean;
     password: string;
     rememberMe: boolean;
@@ -61,12 +61,10 @@ export class JhiLoginModalComponent implements OnInit {
                 this.$state.go('home');
             }
 
-            this.eventManager.broadcast(
-                {
-                    name: 'authenticationSuccess',
-                    content: 'Sending Authentication Success'
-                }
-            );
+            this.eventManager.broadcast({
+                name: 'authenticationSuccess',
+                content: 'Sending Authentication Success'
+            });
 
             // previousState was set in the authExpiredInterceptor before being redirected to login modal.
             // since login is succesful, go to stored previousState and clear previousState

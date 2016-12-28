@@ -3,7 +3,7 @@ import { ProfileService } from './profile.service';
 import { ProfileInfo } from './profile-info.model';
 
 @Component({
-    selector: 'page-ribbon',
+    selector: 'jhi-page-ribbon',
     template: `<div class="ribbon {{cssClass}}"><a href="" jhi-translate="global.ribbon.{{ribbonEnv}}">{{ribbonEnv}}</a></div>`
 })
 export class PageRibbonComponent implements OnInit {

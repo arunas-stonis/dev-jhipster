@@ -1,11 +1,11 @@
 {
   "generator-jhipster": {
     "jhipsterVersion": "3.12.1",
-    "baseName": "myapp",
+    "baseName": "jhipster",
     "packageName": "com.mycompany.myapp",
     "packageFolder": "com/mycompany/myapp",
     "serverPort": "8080",
-    "authenticationType": "jwt",
+    "authenticationType": "session",
     "hibernateCache": "no",
     "clusteredHttpSession": false,
     "websocket": false,
@@ -16,14 +16,12 @@
     "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "jwtSecretKey": "362bc01ca2130fac1826b3c45f95f2ee0bafac91",
+    "rememberMeKey": "b4f755b9324c8e1ca911fe7903b4aa5416e54327",
     "useSass": false,
     "clientPackageManager": "npm",
     "applicationType": "monolith",
     "clientFramework": "angular2",
-    "testFrameworks": [
-      "gatling"
-    ],
+    "testFrameworks": [],
     "jhiPrefix": "jhi",
     "enableTranslation": true,
     "nativeLanguage": "en",
