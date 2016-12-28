@@ -26,9 +26,7 @@ import {
     ParseLinks,
     DataUtils,
     DateUtils,
-    EventManager,
-    JhSortDirective,
-    JhSortByDirective
+    EventManager
 } from './';
 
 @NgModule({
@@ -51,9 +49,7 @@ import {
         JhiSortByDirective,
         MaxbytesValidator,
         MinbytesValidator,
-        ShowValidationDirective,
-        JhSortDirective,
-        JhSortByDirective
+        ShowValidationDirective
     ],
     providers: [
         JhiLanguageService,
@@ -82,9 +78,7 @@ import {
         JhiSortByDirective,
         MaxbytesValidator,
         MinbytesValidator,
-        ShowValidationDirective,
-        JhSortDirective,
-        JhSortByDirective
+        ShowValidationDirective
     ]
 })
 export class JhipsterSharedCommonModule {}
