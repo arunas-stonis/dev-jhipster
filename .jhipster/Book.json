@@ -1,0 +1,21 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "year",
+            "fieldType": "Integer"
+        }
+    ],
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "book",
+    "pagination": "no"
+}
